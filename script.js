@@ -99,6 +99,16 @@ function playSound(type) {
       osc3.start(now);
       osc3.stop(now + 0.25);
       break;
+    case "crack":
+      // Cracking glass sound
+      osc.type = "square";
+      osc.frequency.setValueAtTime(1200, now);
+      osc.frequency.exponentialRampToValueAtTime(400, now + 0.3);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+      osc.start(now);
+      osc.stop(now + 0.3);
+      break;
   }
 }
 
@@ -234,24 +244,110 @@ function resetApp() {
   playSound("complete");
 }
 
-//for crack
+// ENHANCED CRACK AND FALL - Everything falls apart!
 function crackAndEnd() {
-  playSound("complete"); // final sound
+  playSound("crack"); // Cracking sound
 
   const container = document.getElementById("container");
   const blackout = document.getElementById("blackout");
 
-  // Crack (shake)
+  // Lock scroll
+  document.body.classList.add("crack-mode");
+
+  // Step 1: Shake the whole container
   container.classList.add("crack");
 
-  // After shake → fall
+  // Step 2: Break everything into pieces after shake
   setTimeout(() => {
     container.classList.remove("crack");
-    container.classList.add("fall");
-  }, 500);
+    breakIntoElements();
+  }, 600);
 
-  // After fall → blackout
+  // Step 3: Fade to black
   setTimeout(() => {
     blackout.style.opacity = "1";
-  }, 1200);
+  }, 2000);
+}
+
+function breakIntoElements() {
+  const container = document.getElementById("container");
+  const elements = container.querySelectorAll(
+    "h2, p, button, img, .compliment-box, .image-container",
+  );
+
+  // Convert container to relative positioning context
+  container.style.position = "relative";
+  container.style.overflow = "visible";
+
+  elements.forEach((element, index) => {
+    // Skip if already processed
+    if (element.classList.contains("falling-element")) return;
+
+    // Get element's current position and computed styles
+    const rect = element.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(element);
+
+    // Create a clone
+    const clone = element.cloneNode(true);
+    clone.classList.add("falling-element");
+
+    // Copy ALL computed styles to make it look identical
+    clone.style.position = "fixed";
+    clone.style.left = rect.left + "px";
+    clone.style.top = rect.top + "px";
+    clone.style.width = rect.width + "px";
+    clone.style.height = rect.height + "px";
+    clone.style.margin = "0";
+    clone.style.zIndex = "10000";
+
+    // Preserve visual styling
+    clone.style.background = computedStyle.background;
+    clone.style.backgroundColor = computedStyle.backgroundColor;
+    clone.style.backgroundImage = computedStyle.backgroundImage;
+    clone.style.color = computedStyle.color;
+    clone.style.fontSize = computedStyle.fontSize;
+    clone.style.fontWeight = computedStyle.fontWeight;
+    clone.style.borderRadius = computedStyle.borderRadius;
+    clone.style.border = computedStyle.border;
+    clone.style.boxShadow = computedStyle.boxShadow;
+    clone.style.padding = computedStyle.padding;
+    clone.style.textAlign = computedStyle.textAlign;
+    clone.style.lineHeight = computedStyle.lineHeight;
+    clone.style.fontFamily = computedStyle.fontFamily;
+
+    // For images, ensure they're visible
+    if (element.tagName === "IMG") {
+      clone.style.objectFit = computedStyle.objectFit;
+      clone.style.display = "block";
+    }
+
+    // Random fall parameters
+    const randomDelay = Math.random() * 300; // 0-300ms delay
+    const randomRotation = (Math.random() - 0.5) * 720; // -360 to 360 degrees
+    const randomX = (Math.random() - 0.5) * 200; // Horizontal drift
+
+    // Add to body
+    document.body.appendChild(clone);
+
+    // Hide original
+    element.style.opacity = "0";
+
+    // Start falling animation with delay
+    setTimeout(() => {
+      clone.style.transition = `all ${1.5 + Math.random() * 0.5}s cubic-bezier(0.4, 0, 0.6, 1)`;
+      clone.style.transform = `translateY(${window.innerHeight + 200}px) translateX(${randomX}px) rotate(${randomRotation}deg) scale(0.8)`;
+      clone.style.opacity = "0";
+      clone.style.filter = "blur(3px)";
+    }, randomDelay);
+
+    // Clean up after animation
+    setTimeout(() => {
+      clone.remove();
+    }, 2500 + randomDelay);
+  });
+
+  // Hide the original container after elements start falling
+  setTimeout(() => {
+    container.style.opacity = "0";
+  }, 400);
 }

@@ -273,6 +273,97 @@ button:active {
   }
 }
 
+/* ========== ENHANCED BLACKOUT EFFECTS ========== */
+
+/* Lock scroll during crack */
+body.crack-mode {
+  overflow: hidden;
+}
+
+/* Fullscreen black overlay - more elegant transition */
+#blackout {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(0px);
+}
+
+#blackout.active {
+  backdrop-filter: blur(10px);
+}
+
+/* Optimized shake effect for mobile - lighter animation */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  15% {
+    transform: translate(-6px, 4px) rotate(-2deg);
+  }
+  30% {
+    transform: translate(6px, -4px) rotate(2deg);
+  }
+  45% {
+    transform: translate(-4px, 3px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(4px, -3px) rotate(1deg);
+  }
+  75% {
+    transform: translate(-2px, 2px) rotate(-0.5deg);
+  }
+  90% {
+    transform: translate(2px, -2px) rotate(0.5deg);
+  }
+}
+
+/* Smoother fall-down effect with elegant fade */
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  30% {
+    transform: translateY(30vh) rotate(5deg) scale(0.95);
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  60% {
+    transform: translateY(70vh) rotate(12deg) scale(0.85);
+    opacity: 0.4;
+    filter: blur(3px);
+  }
+  100% {
+    transform: translateY(120vh) rotate(20deg) scale(0.7);
+    opacity: 0;
+    filter: blur(5px);
+  }
+}
+
+/* Applied states - optimized for performance */
+.crack {
+  animation: shake 0.6s ease-in-out;
+  will-change: transform;
+}
+
+.fall {
+  animation: fall 1.4s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Falling elements - individual pieces */
+.falling-element {
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ========== MOBILE OPTIMIZATIONS ========== */
 @media (max-width: 480px) {
   #container {
     padding: 25px 20px;
@@ -295,55 +386,49 @@ button:active {
     right: 15px;
     font-size: 1.3em;
   }
-}
 
-//crack
-/* Fullscreen black overlay */
-#blackout {
-  position: fixed;
-  inset: 0;
-  background: black;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transition: opacity 0.8s ease;
-}
+  /* Lighter animations for low-end devices (4GB RAM) */
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(-4px, 3px) rotate(-1.5deg);
+    }
+    50% {
+      transform: translate(4px, -3px) rotate(1.5deg);
+    }
+    75% {
+      transform: translate(-2px, 2px) rotate(-0.5deg);
+    }
+  }
 
-/* Shake effect */
-@keyframes shake {
-  0% {
-    transform: translate(0, 0);
+  @keyframes fall {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(50vh) scale(0.9);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(110vh) scale(0.75);
+      opacity: 0;
+    }
   }
-  20% {
-    transform: translate(-5px, 5px);
-  }
-  40% {
-    transform: translate(5px, -5px);
-  }
-  60% {
-    transform: translate(-5px, -5px);
-  }
-  80% {
-    transform: translate(5px, 5px);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
 
-/* Fall-down effect */
-@keyframes fall {
-  to {
-    transform: translateY(120vh) rotate(5deg);
-    opacity: 0;
+  .crack {
+    animation-duration: 0.5s;
   }
-}
 
-/* Applied states */
-.crack {
-  animation: shake 0.5s linear;
-}
+  .fall {
+    animation-duration: 1.2s;
+  }
 
-.fall {
-  animation: fall 1s ease forwards;
+  #blackout {
+    transition-duration: 1s;
+    backdrop-filter: none; /* Remove blur on mobile for performance */
+  }
 }
