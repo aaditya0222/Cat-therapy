@@ -5,27 +5,27 @@ let isMuted = false;
 // Cat memes
 const catMemes = [
   {
-    img: "./public/insp1.jpg",
+    img: "./images/insp1.jpg",
     text: "Kahi ko ris kahi • You're tougher than this! 💪",
   },
   {
-    img: "./public/insp2.jpg",
+    img: "./images/insp2.jpg",
     text: "When you're just existing and mummy finds fault 🙃 • It happens!",
   },
   {
-    img: "./public/insp3.jpg",
+    img: "./images/insp3.jpg",
     text: "Just nod and say 'hunxa' 😌 • Works most of the time!",
   },
   {
-    img: "./public/insp4.jpg",
+    img: "./images/insp4.jpg",
     text: "Plot twist: You're the strong one 🦁 • Believe it!",
   },
   {
-    img: "./public/insp5.jpg",
+    img: "./images/insp5.jpg",
     text: "Mummy today: 😤 | Mummy tomorrow: 'Kei khane babu?' 🥰",
   },
   {
-    img: "./public/insp6.jpg",
+    img: "./images/insp6.jpg",
     text: "Mummy scolds = Love language 💕 • She cares!",
   },
 ];
