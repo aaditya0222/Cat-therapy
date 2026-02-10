@@ -70,12 +70,18 @@
           />
           <div class="image-loader" id="happyLoader">Loading... 🐱</div>
         </div>
+        <audio
+          src="./images/happyBananaSound.mp3"
+          id="happySound"
+          preload="auto"
+          loop="3"
+        ></audio>
         <div id="happyCounter"></div>
         <p>
-          Exam ta hudai rahanxa. Chill gara, relax gara and mood thik rakha! 😎
+          Exam ta hudai rahanxa. Chill gara, relax gara, mood thik rakha! 😎
         </p>
-        <button onclick="showBonusScreen()">A tiny bonus 😏</button>
         <button onclick="goToScreen(6)">Lah, that's enough 😅</button>
+        <button onclick="showBonusScreen()">A tiny bonus 😏</button>
       </div>
 
       <!-- Screen 5: Bonus -->
@@ -97,7 +103,7 @@
 
       <!-- Screen 6: Salute GIF -->
       <div class="screen" id="screen6">
-        <h2>Hmm 🤔</h2>
+        <h2>Alright then! 🫡</h2>
         <div class="image-container">
           <img
             id="saluteImage"
@@ -108,12 +114,12 @@
           <div class="image-loader" id="saluteLoader">Loading... 😺</div>
         </div>
         <div class="compliment-box" id="saluteComplimentBox">
-          Mood thik vayo hola? 😌✨
+          Mission: Cheer you up ✅ Completed! 🎉
         </div>
-        <p>Lah... Exam ta bhagwan bharoshe hunxa hola🤣😸</p>
+        <p>Ab jaake padhai kar 😂📚</p>
         <div id="saluteCounter"></div>
-        <button onclick="crackAndEnd()">Lah bye 👋</button>
-        <button onclick="resetApp()">Pheri Try Garne?😅</button>
+        <button onclick="crackAndEnd()">Roger that! 🫡</button>
+        <button onclick="resetApp()">Wait, one more round? 😹</button>
       </div>
     </div>
     <!-- For blackout -->

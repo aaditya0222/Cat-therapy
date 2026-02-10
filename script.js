@@ -135,6 +135,12 @@ function preloadImages() {
 
   preloadImages.bonus = new Image();
   preloadImages.bonus.src = "./images/bonus.jpg";
+
+  // Preload happy sound
+  const happySound = document.getElementById("happySound");
+  if (happySound) {
+    happySound.load();
+  }
 }
 window.addEventListener("load", preloadImages);
 
@@ -147,7 +153,15 @@ function goToScreen(num) {
   document.getElementById("screen" + num).classList.add("active");
 
   if (num === 3 && memeCount === 0) showMeme();
-  if (num === 4) showHappy();
+  if (num === 4) {
+    showHappy();
+    // Play happy sound on user click
+    const audio = document.getElementById("happySound");
+    if (audio && !isMuted) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  }
   if (num === 6) showSalute();
   createFloatingEmoji();
 }
