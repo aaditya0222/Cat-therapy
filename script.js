@@ -215,6 +215,47 @@ function showSalute() {
   const img = document.getElementById("saluteImage");
   img.style.animation = "slideIn 0.5s ease";
   playSound("complete");
+
+  // Trigger confetti celebration
+  setTimeout(() => {
+    createConfetti();
+  }, 300);
+}
+
+// Confetti celebration effect
+function createConfetti() {
+  // 🎉 from bottom left corner - 6 pieces shooting diagonally
+  for (let i = 0; i < 6; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti confetti-bottom-left";
+    confetti.textContent = "🎉";
+    confetti.style.animationDelay = i * 0.08 + "s";
+    confetti.style.setProperty("--spread", i * 10 + 30);
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 2500);
+  }
+
+  // 🎉 from bottom right corner - 6 pieces shooting diagonally
+  for (let i = 0; i < 6; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti confetti-bottom-right";
+    confetti.textContent = "🎉";
+    confetti.style.animationDelay = i * 0.08 + "s";
+    confetti.style.setProperty("--spread", i * 10 + 30);
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 2500);
+  }
+
+  // 🎊 falling from top - 16 pieces across the screen
+  for (let i = 0; i < 16; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti confetti-top";
+    confetti.textContent = "🎊";
+    confetti.style.left = i * 6 + Math.random() * 5 + "%";
+    confetti.style.animationDelay = Math.random() * 0.5 + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
 }
 
 function showBonus() {
@@ -298,6 +339,34 @@ function breakIntoElements() {
   // Convert container to relative positioning context
   container.style.position = "relative";
   container.style.overflow = "visible";
+
+  // Also make the mute button fall
+  const muteBtn = document.getElementById("muteBtn");
+  if (muteBtn) {
+    const muteBtnRect = muteBtn.getBoundingClientRect();
+    const muteClone = muteBtn.cloneNode(true);
+    muteClone.style.position = "fixed";
+    muteClone.style.left = muteBtnRect.left + "px";
+    muteClone.style.top = muteBtnRect.top + "px";
+    muteClone.style.width = muteBtnRect.width + "px";
+    muteClone.style.height = muteBtnRect.height + "px";
+    muteClone.style.margin = "0";
+    muteClone.style.zIndex = "10000";
+
+    document.body.appendChild(muteClone);
+    muteBtn.style.opacity = "0";
+
+    setTimeout(() => {
+      muteClone.style.transition = `all ${1.5 + Math.random() * 0.5}s cubic-bezier(0.4, 0, 0.6, 1)`;
+      muteClone.style.transform = `translateY(${window.innerHeight + 200}px) translateX(${(Math.random() - 0.5) * 200}px) rotate(${(Math.random() - 0.5) * 720}deg) scale(0.8)`;
+      muteClone.style.opacity = "0";
+      muteClone.style.filter = "blur(3px)";
+    }, Math.random() * 300);
+
+    setTimeout(() => {
+      muteClone.remove();
+    }, 2500);
+  }
 
   elements.forEach((element, index) => {
     // Skip if already processed

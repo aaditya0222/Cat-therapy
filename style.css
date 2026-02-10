@@ -444,6 +444,76 @@ body.crack-mode {
   will-change: transform, opacity;
 }
 
+/* Confetti effect for bye screen */
+.confetti {
+  position: fixed;
+  font-size: 1.8em;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* 🎉 from bottom left corner - diagonal spread */
+.confetti-bottom-left {
+  bottom: 0;
+  left: 0;
+  animation: confettiBottomLeft 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes confettiBottomLeft {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--spread) * 1vw), calc(var(--spread) * -1vh))
+      rotate(360deg) scale(0.3);
+  }
+}
+
+/* 🎉 from bottom right corner - diagonal spread */
+.confetti-bottom-right {
+  bottom: 0;
+  right: 0;
+  animation: confettiBottomRight 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    forwards;
+}
+
+@keyframes confettiBottomRight {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--spread) * -1vw), calc(var(--spread) * -1vh))
+      rotate(-360deg) scale(0.3);
+  }
+}
+
+/* 🎊 falling from top with gentle sway */
+.confetti-top {
+  top: -50px;
+  animation: confettiTop 2.5s ease-in forwards;
+}
+
+@keyframes confettiTop {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
+
 /* ========== MOBILE OPTIMIZATIONS ========== */
 @media (max-width: 480px) {
   body {
