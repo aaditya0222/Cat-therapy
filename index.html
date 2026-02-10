@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Cat Therapy🐱</title>
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
 
@@ -38,12 +41,18 @@
 
       <!-- Screen 3: Cat memes -->
       <div class="screen" id="screen3">
+        <div class="progress-tracker">
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="memeProgressBar"></div>
+            <div class="progress-cat" id="progressCat">🐱</div>
+            <div class="progress-flag" id="progressFlag">🏁</div>
+          </div>
+        </div>
+        <div class="compliment-box" id="memeComplimentBox">You're amazing!</div>
         <div class="image-container">
           <img id="memeImage" class="cat-image" src="" alt="Cat Meme" />
           <div class="image-loader" id="memeLoader">Loading... 🐱</div>
         </div>
-        <div class="compliment-box" id="memeComplimentBox">You're amazing!</div>
-        <div id="memeCounter">5 inspirations left</div>
         <button class="btn-secondary" onclick="nextMeme()">Ajhai xa!?🐱</button>
         <button onclick="goToScreen(4)">Bas, enough for today 💛</button>
       </div>
@@ -63,8 +72,9 @@
         </div>
         <div id="happyCounter"></div>
         <p>
-          Exam ta hudai rahanxa. Chill gara, relax gara, mood thik rakha! 😎
+          Exam ta hudai rahanxa. Chill gara, relax gara and mood thik rakha! 😎
         </p>
+        <p>Radhe Radhe🍁!</p>
         <button onclick="goToScreen(6)">Lah, that's enough 😅</button>
         <button onclick="showBonusScreen()">A tiny bonus 😏</button>
       </div>

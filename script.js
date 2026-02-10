@@ -177,9 +177,29 @@ function showMeme() {
   setTimeout(() => (img.style.animation = "slideIn 0.5s ease"), 10);
 
   document.getElementById("memeComplimentBox").textContent = msg.text;
-  const left = catMemes.length - memeCount - 1;
-  document.getElementById("memeCounter").textContent =
-    left > 0 ? `${left} inspirations left` : "Last inspiration!";
+
+  // Update progress bar
+  const currentProgress = memeCount + 1;
+  const progressPercent = (currentProgress / catMemes.length) * 100;
+  document.getElementById("memeProgressBar").style.width =
+    progressPercent + "%";
+  document.getElementById("progressCat").style.left = progressPercent + "%";
+
+  // Change cat emoji based on progress
+  const progressCat = document.getElementById("progressCat");
+  if (currentProgress === 1) {
+    progressCat.textContent = "🐱";
+  } else if (currentProgress <= 3) {
+    progressCat.textContent = "😺";
+  } else if (currentProgress < 6) {
+    progressCat.textContent = "😸";
+  } else {
+    progressCat.textContent = "🎉";
+    // Celebrate at finish - flag wave
+    const flag = document.getElementById("progressFlag");
+    flag.classList.add("celebrate");
+    setTimeout(() => flag.classList.remove("celebrate"), 600);
+  }
 
   memeCount++;
 }
