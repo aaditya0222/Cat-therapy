@@ -243,8 +243,11 @@ function playHappyAudio() {
   audio.play().catch(() => {});
 }
 
-function pauseHappyAudio() {
+function pauseHappyAudio(reset = false) {
   const audio = document.getElementById("happySound");
+  if (reset) {
+    audio.currentTime = 0;
+  }
   if (!audio) return;
 
   audio.pause();
@@ -342,6 +345,7 @@ function resetApp() {
     .querySelectorAll(".screen")
     .forEach((s) => s.classList.remove("active"));
   document.getElementById("screen1").classList.add("active");
+  pauseHappyAudio((reset = true));
   playSound("complete");
 }
 
